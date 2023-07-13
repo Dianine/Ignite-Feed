@@ -2,16 +2,17 @@ import {PencilLine} from 'phosphor-react'
 
 import styles from './SideBar.module.css'
 
-import Profile from "../assets/profile.png"
+import profile from "../assets/profile.png"
 
 export default function SideBar(){
   return(
     <aside className={styles.sideBar}>
       <img
-      className={styles.cover}
-        src="https://images.unsplash.com/photo-1603468620905-8de7d86b781e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=50" alt="" />
+        className={styles.cover}
+        src="https://images.unsplash.com/photo-1603468620905-8de7d86b781e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=50" alt="" 
+      />
       <div className={styles.profile}>
-        <img src={Profile} alt="Imagem perfil" />
+        <img src={profile} alt="Imagem perfil" />
         <strong>Dianine Costa</strong>
         <span>Web Developer</span>
       </div>

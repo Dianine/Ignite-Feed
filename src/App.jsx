@@ -1,9 +1,9 @@
-import Post from "./Post";
 import { Header } from "./components/Header";
+import SideBar from "./components/SideBar";
+import Post from "./components/Post";
 
 import styles from'./App.module.css'
 import './global.css'
-import SideBar from "./components/SideBar";
 
 export default function App() {
 
@@ -13,16 +13,11 @@ export default function App() {
 
    <div className={styles.wrapper}>
     <SideBar/>
+
     <main>
-      <Post 
-        author="Dianine Costa" 
-        content="lorim ipsum"
-      />
-      <Post 
-        author="Thomas Costa" 
-        content="Segundo Post passado pela props"
-      />
+      <Post/>
     </main>
+
    </div>
   </div>
   )
