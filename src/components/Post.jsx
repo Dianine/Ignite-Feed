@@ -7,10 +7,10 @@ export default function Post() {
       <header>
         <div className={styles.author}>
           <img src={profileInfo} alt="" />
-        </div>
         <div className={styles.authorInfo}>
           <strong>Dianine Costa</strong>
           <span>Web Developer</span>
+        </div>
         </div>
 
         <time
@@ -22,10 +22,22 @@ export default function Post() {
       </header>
 
       <div className={styles.content}>
-        <p>Fala galera</p>
-        <p>Acabei de subr mais um projeto no meu git</p>
-        <p> <a href="https://github.com/Dianine">GitHub</a> </p>
-        <p> <a href="#"> #Front #React #WebDeveloper #Ignite </a></p>
+        <p>Fala galera!!</p>
+        <p>
+          Acabei de subir mais um commit do projeto do primeiro modulo com curso Ignit da RocketSeat no meu GitHub, corre lá e confere.
+        </p>
+        <p> 
+          {" "} 
+          <a href="https://github.com/Dianine">
+            Github.com/Dianine
+            </a> 
+        </p>
+        <p> 
+          <a href="#"> #Front  </a> {" "}
+          <a href="#"> #React </a> {" "}
+          <a href="#"> #WebDeveloper </a> {" "}
+          <a href="#"> #Ignite </a> 
+        </p>
       </div>
     </article>
   )
