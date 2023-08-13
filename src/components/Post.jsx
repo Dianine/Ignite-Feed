@@ -1,43 +1,116 @@
-import profileInfo from '../assets/profileInfo.png'
-import styles from './Post.module.css'
+import {format, formatDistanceToNow} from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
 
-export default function Post() {
+import Avatar from './Avatar'
+
+import styles from './Post.module.css'
+import Comment from './Comment'
+import { useState } from 'react'
+
+
+export default function Post({author, publishedAt, content}) {
+  const [comments, setComments] = useState(['Post muito bacana, hein?!'])
+  const [newCommentText, setNewCommentText] = useState('')
+
+  const publishedAtDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
+    locale: ptBR
+  })
+
+  const pubishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale:ptBR,
+    addSuffix: true
+  })
+  
+  function handleCreateNemComment() {
+    event.preventDefault()
+
+    setComments([...comments, newCommentText])
+    setNewCommentText('')
+
+  }
+
+  function handleNewCommentChange(){
+    event.target.setCustomValidity('')
+    setNewCommentText(event.target.value)
+  }
+
+  function handleNewComentInvalid() {
+    event.target.setCustomValidity('Esse campo é obrigatório!')
+  }
+
+  function deleteComment(commentToDelete) {
+    console.log('ssssssss')
+    const commentsWithoutDeletedOne = comments.filter(comment => {
+      return comment !== commentToDelete;
+    })
+
+    setComments(commentsWithoutDeletedOne);
+  }
+
+  const isNewCommentEmpty = newCommentText.length === 0
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <img src={profileInfo} alt="" />
+
+          <Avatar src={author.avatarUrl}/>
+
         <div className={styles.authorInfo}>
-          <strong>Dianine Costa</strong>
-          <span>Web Developer</span>
+          <strong>{author.name}</strong>
+          <span>{author.role}</span>
         </div>
         </div>
 
         <time
-          title='12 de julho de 2023 às 21:45:00' 
-          dateTime='2023-07-12 21:38:00'
+          title={publishedAtDateFormatted}
+          dateTime={publishedAt.toISOString()}
         >
-          Públicado há 1h
+          {pubishedDateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala galera!!</p>
-        <p>
-          Acabei de subir mais um commit do projeto do primeiro modulo com curso Ignit da RocketSeat no meu GitHub, corre lá e confere.
-        </p>
-        <p> 
-          {" "} 
-          <a href="https://github.com/Dianine">
-            Github.com/Dianine
-            </a> 
-        </p>
-        <p> 
-          <a href="#"> #Front  </a> {" "}
-          <a href="#"> #React </a> {" "}
-          <a href="#"> #WebDeveloper </a> {" "}
-          <a href="#"> #Ignite </a> 
-        </p>
+        {content.map(line => {
+          if(line.type === 'paragraph'){
+            return <p key={line.content}> {line.content} </p>;
+          } else if (line.type === 'link') {
+            return <p key={line.content}> <a href="#"> {line.content} </a> </p>
+          }
+        })}
+      </div>
+
+      <form onSubmit={handleCreateNemComment} className={styles.commentForm}>
+        <strong>Deixe seu feedback</strong>
+
+        <textarea 
+        onChange={handleNewCommentChange}
+        value={newCommentText}
+        name='comment'
+        placeholder='Deixe um comentário'
+        required={true}
+        onInvalid={handleNewComentInvalid}
+        />
+      <footer>
+        <button 
+        type='submit'
+        disabled={isNewCommentEmpty}
+        >
+          Públicar
+          </button>
+      </footer>
+      </form>
+
+      <div className={styles.commentList}>
+       {comments.map(comment => {
+        return (
+          <Comment 
+            key={comment} 
+            content={comment} 
+            onDeleteComment={deleteComment}
+          />
+          )
+       })}
       </div>
     </article>
   )
